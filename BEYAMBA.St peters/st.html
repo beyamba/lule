@@ -1,0 +1,250 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>St. Peters SS Kongonta</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<style>
+body {font-family: Arial, sans-serif; margin:0; background:#f0f0f0;}
+header {background:#5dade2; color:white; padding:15px; text-align:center; font-size:24px; font-weight:bold; position:relative;}
+#logoutBtn {position:absolute; right:20px; top:10px; background:#001f3f; color:white; border:none; padding:6px 12px; border-radius:5px; cursor:pointer;}
+nav {background:#5dade2; display:flex; justify-content:center; flex-wrap:wrap;}
+nav button {background:none; border:none; color:white; padding:12px 18px; cursor:pointer; font-size:16px;}
+nav button.active, nav button:hover {background:#003366;}
+.content {padding:20px; background:#f0f0f0; min-height:70vh;}
+footer {background:#001f3f; color:white; text-align:center; padding:10px;}
+.login-container {display:flex; justify-content:center; align-items:center; height:100vh; background:#5dade2;}
+.login-box {background:#f0f0f0; padding:30px; border-radius:10px; width:300px; text-align:center;}
+.login-box img {width:120px; height:120px; object-fit:cover; border-radius:50%; margin-bottom:10px;}
+.login-box input {width:100%; padding:10px; margin:8px 0; border-radius:5px; border:1px solid #ccc;}
+.login-box button {width:100%; padding:10px; background:#001f3f; color:white; border:none; border-radius:5px;}
+.forgot {color:#5dade2; font-size:14px; text-decoration:none;}
+.finance-section select, .finance-section input, .finance-section button,
+.admission-section select, .admission-section input, .admission-section button,
+.teacher-section input, .teacher-section select, .teacher-section button
+{padding:8px; margin:5px; border-radius:5px;}
+.table {width:100%; border-collapse:collapse; margin-top:10px;}
+.table th, .table td {border:1px solid #ccc; padding:8px; text-align:center;}
+.carousel {position:relative; overflow:hidden; height:300px; margin-bottom:20px;}
+.slides img {width:100%; display:none; height:100%; object-fit:cover;}
+.slides img.active {display:block;}
+.marquee {background:#5dade2; color:white; padding:10px; overflow:hidden; white-space:nowrap;}
+.marquee span {display:inline-block; padding-left:100%; animation: scroll 20s linear infinite;}
+@keyframes scroll {0%{transform:translateX(0);} 100%{transform:translateX(-100%);}}
+.motto {text-align:center; font-weight:bold; font-size:18px; margin:10px 0;}
+.tab-section h3 {margin-top:0;}
+button.editBtn {background:#001f3f; color:white; border:none; padding:4px 8px; border-radius:4px; cursor:pointer;}
+</style>
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+</head>
+
+<body>
+<!-- Login Page -->
+<div class="login-container" id="login-page">
+<div class="login-box">
+<img src="log.jpg" alt="Logo">
+<h2>St PETERS' SS KONGOTA</h2>
+<input type="email" id="email" placeholder="Email" required>
+<div style="position:relative;">
+  <input type="password" id="password" placeholder="Password" required>
+  <input type="checkbox" id="showPass" style="position:absolute; right:5px; top:15px;">
+  <label for="showPass" style="font-size:12px;">Show</label>
+</div>
+<button id="login-btn">Login</button>
+<p id="login-error" style="color:red;"></p>
+<a href="#" class="forgot">Forgot Password?</a>
+</div>
+</div>
+
+<!-- Dashboard -->
+<div id="dashboard" style="display:none;">
+<header>
+St. Peters SS Kongota Dashboard
+<button id="logoutBtn">Logout</button>
+</header>
+
+<div class="motto">"EDUCATION FOR BRIGHT FUTURE"</div>
+
+<div class="carousel">
+<div class="slides">
+  <img src="im.jpg" class="active">
+  <img src="bend.jpg">
+  <img src="stand.jpg">
+</div>
+</div>
+
+<nav>
+<button class="tab active" data-tab="Admission">Admission</button>
+<button class="tab" data-tab="Updates">Updates</button>
+<button class="tab" data-tab="Classes">Classes</button>
+<button class="tab" data-tab="About">About Us</button>
+<button class="tab" data-tab="Finance">Finance</button>
+<button class="tab" data-tab="Teachers">Teachers Records</button>
+</nav>
+
+<div class="content" id="tab-content">
+<!-- Admission Tab -->
+<div id="Admission" class="tab-section admission-section">
+<h3>Admission Forms (S1-S6)</h3>
+<label>Class:</label>
+<select id="admissionClass">
+<option>Senior 1</option><option>Senior 2</option><option>Senior 3</option>
+<option>Senior 4</option><option>Senior 5</option><option>Senior 6</option>
+</select><br>
+<input id="stuName" placeholder="Student Name">
+<input id="stuAge" placeholder="Age">
+<input id="stuNIN" placeholder="NIN Number">
+<input id="stuEMIS" placeholder="EMIS Number">
+<input id="stuParent" placeholder="Parent Name">
+<input id="stuLocation" placeholder="Location">
+<input id="stuPhone" placeholder="Phone Number">
+<input id="stuCareer" placeholder="Career Aspiring To">
+<button id="saveAdmission">Save</button>
+</div>
+
+<!-- Updates Tab -->
+<div id="Updates" class="tab-section" style="display:none;">No updates yet.</div>
+
+<!-- Classes Tab -->
+<div id="Classes" class="tab-section" style="display:none;">
+<h3>Saved Students</h3>
+<div id="classTables"></div>
+</div>
+
+<!-- About Us Tab -->
+<div id="About" class="tab-section" style="display:none;">
+<h3>About Us</h3>
+<iframe width="100%" height="400" src="vi.mp4" allowfullscreen></iframe>
+</div>
+
+<!-- Finance Tab -->
+<div id="Finance" class="tab-section finance-section" style="display:none;">
+<h3>Finance Records</h3>
+<label>Class: </label>
+<select id="classLevel">
+<option>Senior 1</option><option>Senior 2</option><option>Senior 3</option>
+<option>Senior 4</option><option>Senior 5</option><option>Senior 6</option>
+</select><br>
+<input id="name" placeholder="Name">
+<input id="age" placeholder="Age">
+<input id="stream" placeholder="Stream">
+<input id="term" placeholder="Term">
+<input id="totalAmount" placeholder="Total Amount">
+<input id="amountPaid" placeholder="Amount Paid">
+<input id="balance" placeholder="Balance" readonly>
+<button id="saveRecord">Save</button>
+<table class="table" id="recordsTable">
+<thead><tr><th>Name</th><th>Age</th><th>Stream</th><th>Term</th><th>Total</th><th>Paid</th><th>Balance</th><th>Action</th></tr></thead>
+<tbody></tbody>
+</table>
+</div>
+
+<!-- Teachers Tab -->
+<div id="Teachers" class="tab-section teacher-section" style="display:none;">
+<h3>Teachers Records</h3>
+<input id="teacherName" placeholder="Teacher Name">
+<input id="teacherSubject" placeholder="Subject">
+<input id="teacherClass" placeholder="Class">
+<input id="teacherAmount" placeholder="Amount">
+<input id="teacherPaid" placeholder="Paid Amount">
+<input id="teacherBalance" placeholder="Balance" readonly>
+<button id="saveTeacher">Save</button>
+<table class="table" id="teacherTable">
+<thead><tr><th>Name</th><th>Subject</th><th>Class</th><th>Amount</th><th>Paid</th><th>Balance</th><th>Action</th></tr></thead>
+<tbody></tbody>
+</table>
+</div>
+</div>
+
+<div class="marquee">
+<span>TRANSPARENCY, ACCOUNTABILITY PROMOTES EFFICIENCY IN OUR WORK</span>
+</div>
+<p style="text-align:center; font-weight:bold;">WE TRUST OUR SAVIOUR JESUS CHRIST</p>
+<footer>
+©2025 St. Peters SS Kongonta — deusbeyamba@tomlule: 
+<a href="https://www.umu.ac.ug" style="color:#5dade2;">FINANCE DEPARTMENT</a>
+</footer>
+
+<script>
+// Login
+$('#showPass').on('change', function(){$('#password').attr('type',this.checked?'text':'password');});
+$('#login-btn').click(function(){
+const email=$('#email').val();const pass=$('#password').val();
+if(email==='admin@stpeters.com.ug' && pass==='finance@stpeters'){
+$('#login-page').hide();$('#dashboard').show();renderAllTables();}
+else{$('#login-error').text('Invalid email or password.');}});
+$('#logoutBtn').click(function(){$('#dashboard').hide();$('#login-page').show();});
+
+// Tabs
+$('.tab').click(function(){$('.tab').removeClass('active');$(this).addClass('active');
+$('.tab-section').hide();$('#'+$(this).data('tab')).show();});
+
+// Carousel (only 2 images now)
+let index=0;setInterval(()=>{
+const slides=$('.slides img');slides.removeClass('active');index=(index+1)%slides.length;slides.eq(index).addClass('active');},3000);
+
+// Admission Logic with Edit
+let admissionData=JSON.parse(localStorage.getItem('admissionData')||'{}');
+let editAdmissionIndex=null;
+$('#saveAdmission').click(function(){
+const cls=$('#admissionClass').val();
+const rec={name:$('#stuName').val(),age:$('#stuAge').val(),nin:$('#stuNIN').val(),emis:$('#stuEMIS').val(),
+parent:$('#stuParent').val(),location:$('#stuLocation').val(),phone:$('#stuPhone').val(),career:$('#stuCareer').val()};
+admissionData[cls]=admissionData[cls]||[];
+if(editAdmissionIndex!==null){admissionData[cls][editAdmissionIndex]=rec; editAdmissionIndex=null;}
+else{admissionData[cls].push(rec);}
+localStorage.setItem('admissionData',JSON.stringify(admissionData));
+renderAllTables();$('input').val('');
+});
+
+// Classes Tab
+function renderClassTables(){
+let html='';for(let cls in admissionData){
+html+=`<h4>${cls}</h4><table class="table"><thead><tr><th>Name</th><th>Age</th><th>NIN</th><th>EMIS</th><th>Parent</th><th>Location</th><th>Phone</th><th>Career</th><th>Action</th></tr></thead><tbody>`;
+admissionData[cls].forEach((r,i)=>{
+html+=`<tr><td>${r.name}</td><td>${r.age}</td><td>${r.nin}</td><td>${r.emis}</td><td>${r.parent}</td><td>${r.location}</td><td>${r.phone}</td><td>${r.career}</td>
+<td><button class="editBtn" onclick="editAdmission('${cls}',${i})">Edit</button></td></tr>`;});
+html+='</tbody></table>';}
+$('#classTables').html(html);
+}
+window.editAdmission=function(cls,i){
+const r=admissionData[cls][i];
+$('#admissionClass').val(cls);$('#stuName').val(r.name);$('#stuAge').val(r.age);
+$('#stuNIN').val(r.nin);$('#stuEMIS').val(r.emis);$('#stuParent').val(r.parent);
+$('#stuLocation').val(r.location);$('#stuPhone').val(r.phone);$('#stuCareer').val(r.career);
+editAdmissionIndex=i;
+}
+
+// Finance Logic with Edit
+let financeData=JSON.parse(localStorage.getItem('financeData')||'{}');
+let editFinanceIndex=null;
+function renderFinanceTable(){const cls=$('#classLevel').val();const data=financeData[cls]||[];const tbody=$('#recordsTable tbody');tbody.empty();
+data.forEach((r,i)=>{tbody.append(`<tr><td>${r.name}</td><td>${r.age}</td><td>${r.stream}</td><td>${r.term}</td><td>${r.totalAmount}</td><td>${r.amountPaid}</td><td>${r.balance}</td>
+<td><button class="editBtn" onclick="editFinance('${cls}',${i})">Edit</button></td></tr>`);});}
+$('#amountPaid,#totalAmount').on('input',function(){const total=parseFloat($('#totalAmount').val())||0;const paid=parseFloat($('#amountPaid').val())||0;$('#balance').val(total-paid);});
+$('#saveRecord').click(function(){const cls=$('#classLevel').val();const r={name:$('#name').val(),age:$('#age').val(),stream:$('#stream').val(),term:$('#term').val(),totalAmount:$('#totalAmount').val(),amountPaid:$('#amountPaid').val(),balance:$('#balance').val()};
+financeData[cls]=financeData[cls]||[];
+if(editFinanceIndex!==null){financeData[cls][editFinanceIndex]=r;editFinanceIndex=null;} else{financeData[cls].push(r);}
+localStorage.setItem('financeData',JSON.stringify(financeData));$('input').val('');renderFinanceTable();});
+
+// Finance Edit
+window.editFinance=function(cls,i){const r=financeData[cls][i];$('#classLevel').val(cls);$('#name').val(r.name);$('#age').val(r.age);$('#stream').val(r.stream);$('#term').val(r.term);$('#totalAmount').val(r.totalAmount);$('#amountPaid').val(r.amountPaid);$('#balance').val(r.balance);editFinanceIndex=i;}
+
+// Teachers Logic with Edit
+let teacherData=JSON.parse(localStorage.getItem('teacherData')||'{}');let editTeacherIndex=null;
+function renderTeacherTable(){const tbody=$('#teacherTable tbody');tbody.empty();Object.keys(teacherData).forEach(cls=>{
+teacherData[cls].forEach((r,i)=>{tbody.append(`<tr><td>${r.name}</td><td>${r.subject}</td><td>${cls}</td><td>${r.amount}</td><td>${r.paid}</td><td>${r.balance}</td>
+<td><button class="editBtn" onclick="editTeacher('${cls}',${i})">Edit</button></td></tr>`);});});}
+$('#teacherAmount,#teacherPaid').on('input',function(){const amount=parseFloat($('#teacherAmount').val())||0;const paid=parseFloat($('#teacherPaid').val())||0;$('#teacherBalance').val(amount-paid);});
+$('#saveTeacher').click(function(){const cls=$('#teacherClass').val();const r={name:$('#teacherName').val(),subject:$('#teacherSubject').val(),amount:$('#teacherAmount').val(),paid:$('#teacherPaid').val(),balance:$('#teacherBalance').val()};
+teacherData[cls]=teacherData[cls]||[];
+if(editTeacherIndex!==null){teacherData[cls][editTeacherIndex]=r;editTeacherIndex=null;} else{teacherData[cls].push(r);}
+localStorage.setItem('teacherData',JSON.stringify(teacherData));$('input').val('');renderTeacherTable();});
+
+// Render All Tables
+function renderAllTables(){renderClassTables();renderFinanceTable();renderTeacherTable();}
+
+$(document).ready(renderAllTables);
+</script>
+</body>
+</html>
